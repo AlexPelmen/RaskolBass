@@ -52,21 +52,6 @@
     <property name="title">
      <string>Dials</string>
     </property>
-    <widget class="QWidget" name="gridLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>10</y>
-       <width>371</width>
-       <height>181</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="effect_layout" columnstretch="0">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetFixedSize</enum>
-      </property>
-     </layout>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
