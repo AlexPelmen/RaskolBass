@@ -26,10 +26,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    windowelements.cpp
+        windowelements.cpp \
+        asiocontrol.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        asiocontrol.h
 
 FORMS += \
         mainwindow.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Libs/ -lbass
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Libs/ -lbass
+else:macx: LIBS += -L$$PWD/Libs/ -lbass
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.
+
+macx|win32: LIBS += -L$$PWD/Libs/ -lbassasio
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.
