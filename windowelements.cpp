@@ -3,6 +3,10 @@
 #include <QComboBox>
 #include <QGroupBox>
 #include <QDial>
+#include "view.h"
+
+extern R_View View;
+extern QStringList EFFECTS_NAMES;
 
 namespace WindowElements{
 
@@ -15,34 +19,14 @@ namespace WindowElements{
 
 
     //create dial group
-    void create_dial_group( QGroupBox * effect_group ){
-        //dial params
-        int gr_w = effect_group->width();
-        int gr_h = effect_group->height();
-
-        QGridLayout *effect_layout = new QGridLayout( effect_group );
-        int sp_h = effect_layout->horizontalSpacing();
-        int sp_v = effect_layout->verticalSpacing();
-        int row_num = 2;
-        int col_num = 5;
-
-        int dial_width = gr_w / col_num - sp_h;
-        int dial_height = gr_h / row_num - sp_v;
-
-        for( int i = 0; i < row_num; i++ ){
-            for( int j = 0; j < col_num; j++ ){
-                QDial *dial = new QDial();
-                dial->setFixedSize( dial_width, dial_height );
-                dial->setNotchesVisible( true );
-                effect_layout->addWidget( dial, i, j );
-            }
-        }
+    void create_dial_group(){
+        View.display_effect( "distortion" );
     }
 
-
     //create combobox
-    void create_combobox(){
-
+    void create_combobox( QComboBox combo ){
+        foreach( QString name, EFFECTS_NAMES )
+            combo.addItem( name );
     }
 
 }

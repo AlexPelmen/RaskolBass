@@ -15,6 +15,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_radioButton_clicked(bool checked);
+
+    void on_comboBox_currentTextChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 };

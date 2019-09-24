@@ -3,14 +3,21 @@
 #include "bassasio.h"
 #include <iostream>
 
+extern QStringList EFFECTS_NAMES;
+extern std::map<QString, Effect*> effects;
 
-DWORD AsioControl::inputProc(BOOL input, DWORD channel, void *buffer, DWORD length, void *user){
+//constructor
+R_Model::R_Model(){
+    init_effects();
+}
+
+DWORD R_Model::inputProc(BOOL input, DWORD channel, void *buffer, DWORD length, void *user){
     BASS_StreamPutData(input_signal, buffer, length);
     return length;
 }
 
 
-void AsioControl::init_asio(){
+void R_Model::init_asio(){
     //Initialize Bass
     try {
         if ( ! BASS_Init( 1, 44100, 0, 0, NULL) )
@@ -38,11 +45,41 @@ void AsioControl::init_asio(){
 }
 
 
-void AsioControl::asio_dispose(){
+void R_Model::asio_dispose(){
     BASS_ASIO_Stop();
     BASS_ASIO_Free();
     BASS_Stop();
     BASS_Free();
+}
+
+//initialize effects array
+void R_Model::init_effects()
+{
+    effects[ "chorus" ] = new Effect( BASS_FX_DX8_CHORUS, new BASS_DX8_CHORUS );
+    effects[ "compressor" ] = new Effect( BASS_FX_DX8_COMPRESSOR, new BASS_DX8_COMPRESSOR );
+    effects[ "distortion" ] = new Effect( BASS_FX_DX8_DISTORTION, new BASS_DX8_DISTORTION );
+    effects[ "echo" ] = new Effect( BASS_FX_DX8_ECHO, new BASS_DX8_ECHO );
+    effects[ "flanger" ] = new Effect( BASS_FX_DX8_FLANGER, new BASS_DX8_FLANGER );
+    effects[ "gargle" ] = new Effect( BASS_FX_DX8_GARGLE, new BASS_DX8_GARGLE );
+    effects[ "parameq" ] = new Effect( BASS_FX_DX8_PARAMEQ, new BASS_DX8_PARAMEQ );
+    effects[ "reverb" ] = new Effect( BASS_FX_DX8_REVERB, new BASS_DX8_REVERB );
+}
+
+void R_Model::set_effect( QString name ){
+    Effect *eff = effects[ name ];
+    eff->handle = BASS_ChannelSetFX( input_signal, EFFECTS_NAMES.indexOf( name ), 1 );
+    eff->active = true;
+}
+
+void R_Model::remove_effect( QString name ){
+    Effect *eff = effects[ name ];
+    eff->active = false;
+    BASS_ChannelRemoveFX( input_signal, eff->handle );
+}
+
+void R_Model::refresh_effect(QString name){
+    Effect* eff = effects[ name ];
+    BASS_FXSetParameters( eff->handle, eff->params );
 }
 
 

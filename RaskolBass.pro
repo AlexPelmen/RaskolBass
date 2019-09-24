@@ -27,11 +27,13 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         windowelements.cpp \
-        asiocontrol.cpp
+        asiocontrol.cpp \
+    view.cpp
 
 HEADERS += \
         mainwindow.h \
-        asiocontrol.h
+        asiocontrol.h \
+    view.h
 
 FORMS += \
         mainwindow.ui
