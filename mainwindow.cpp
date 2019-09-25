@@ -13,11 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     View.init( ui->effect_group );
-    CONTROLLER_ARRAY* dist = View.controllers[ "distortion" ];
     WindowElements::create_logo( ui->label );
     WindowElements::create_dial_group();
-
-    View.display_effect( "distortion" );
+    WindowElements::create_combobox( ui->comboBox );
 }
 
 MainWindow::~MainWindow()

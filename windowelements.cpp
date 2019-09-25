@@ -24,9 +24,9 @@ namespace WindowElements{
     }
 
     //create combobox
-    void create_combobox( QComboBox combo ){
+    void create_combobox( QComboBox * combo ){
         foreach( QString name, EFFECTS_NAMES )
-            combo.addItem( name );
+            combo->addItem( name );
     }
 
 }
