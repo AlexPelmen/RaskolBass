@@ -18,8 +18,6 @@ int main(int argc, char *argv[])
     w.show();
     Model.init_asio();
     Model.set_effect( "distortion" );
-    BASS_DX8_DISTORTION* dist = (BASS_DX8_DISTORTION*)effects[ "distortion" ]->params;
-    dist->fGain = 61;
     Model.refresh_effect( "distortion" );
 
 

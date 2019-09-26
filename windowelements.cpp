@@ -20,7 +20,7 @@ namespace WindowElements{
 
     //create dial group
     void create_dial_group(){
-        View.display_effect( "distortion" );
+        View.show_effect( "distortion" );
     }
 
     //create combobox

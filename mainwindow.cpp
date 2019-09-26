@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     View.init( ui->effect_group );
+    //View.show_effect( "distortion" );
     WindowElements::create_logo( ui->label );
     WindowElements::create_dial_group();
     WindowElements::create_combobox( ui->comboBox );
@@ -40,5 +41,5 @@ void MainWindow::on_comboBox_currentTextChanged(const QString &arg1)
 {
     QString name( arg1 );
     View.current_effect = name;
-    View.display_effect( name );
+    View.show_effect( name );
 }

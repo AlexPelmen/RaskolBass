@@ -51,6 +51,7 @@ class R_View
 {
 public:
     QGridLayout * layout;
+    QGroupBox * group;
     QSize controller_size;
     QString current_effect;
 
@@ -62,7 +63,8 @@ public:
     R_View();
     void init( QGroupBox * _group );
     void init_effects_layout( QGroupBox * _group );
-    void display_effect( QString effects_name );
+    void show_effect( QString effects_name );
+
     Controller* new_dial( QString _name, void* _value, int _min, int _max );  
 };
 

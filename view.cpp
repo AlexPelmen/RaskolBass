@@ -12,32 +12,43 @@ extern R_Model Model;
 
 //init controllers array with arrays)))
 R_View::R_View(){
-    foreach( QString name, EFFECTS_NAMES )
+    foreach( QString name, EFFECTS_NAMES ){
         controllers[ name ] = new CONTROLLER_ARRAY;
+    }
 }
 
 //create layout and count controllers sizes
 void R_View::init_effects_layout( QGroupBox * _group )
 {
+    group = _group;
     layout = new QGridLayout( _group );
+
     QSize gr_size = _group->size();
     controller_size.setWidth( gr_size.width() / MAX_CONTROLLERS_IN_ROW - layout->horizontalSpacing() );
     controller_size.setHeight( gr_size.height() / MAX_CONTROLLERS_IN_COL - layout->verticalSpacing() );
 }
 
 //dispaly all controllers
-void R_View::display_effect( QString effects_name )
+void R_View::show_effect( QString effects_name )
 {
     //get array(map) of controllers
     CONTROLLER_ARRAY* effect = controllers[ effects_name ];
 
-    //kill children of layout. Wohahahahha!!!
-    QObjectList childs = layout->children();
-    for (int i=0; i< childs.size(); i++)
-    {
-        delete childs[i];
+    //delete all stuff
+    QLayoutItem * item;
+    QLayout * sublayout;
+    QWidget * widget;
+    while ((item = layout->takeAt(0))) {
+        if ((sublayout = item->layout()) != 0) {/* do the same for sublayout*/}
+        else if ((widget = item->widget()) != 0) {widget->hide(); delete widget;}
+        else {delete item;}
     }
+    delete layout;
 
+
+
+
+    layout = new QGridLayout( group );
 
     //just display every layout with controller in the map
     int row = 0;
@@ -57,12 +68,12 @@ void R_View::display_effect( QString effects_name )
 
         //output box
         layout->addWidget( box, col, row);
+        //box->hide();
         if( ++row > MAX_CONTROLLERS_IN_COL ){
             row = 0;
             ++col;
         }
     }
-    current_effect = effects_name;
 }
 
 //set minimum, maximum and notches for dials
